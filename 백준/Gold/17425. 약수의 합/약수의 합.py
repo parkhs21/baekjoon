@@ -1,19 +1,13 @@
-max = 1000000
+MAX = 1000001
+f = [0] * MAX
+dp = [0] * MAX
 
-M = [0 for i in range(max+1)] #누적합 g(x)를 담는 메모
-m = [0 for i in range(max+1)] #해당 값의 약수의 합 f(x)를 담는 메모
+for i in range(1, MAX):
+    for j in range(i, MAX, i):
+        f[j] += i
+    dp[i] = dp[i-1] + f[i]
 
-for i in range(1,max+1):
-    j = 1
-    while i * j <= max: # i*j 값이 최대값이 넘지 않을 때까지
-        m[i*j] += i
-        j += 1
-    M[i] = M[i-1] + m[i]
-
-n = int(input())
-divList = list()
-for i in range(n):
-    a = int(input())
-    divList.append(a)
-for i in divList:
-    print(M[i])
+T = int(input())
+results = [dp[int(input())] for _ in range(T)]
+for i in range(T):
+    print(results[i])
